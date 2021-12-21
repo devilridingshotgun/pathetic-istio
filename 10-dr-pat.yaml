@@ -1,0 +1,14 @@
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: pat-nginx-dr
+  namespace: default
+spec:
+  host: pathetic-nginx
+  subsets:
+    - labels:
+        version: pathetic
+      name: pathetic
+    - labels:
+        version: non-pathetic
+      name: non-pathetic

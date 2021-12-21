@@ -1,0 +1,36 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: nginx-vs
+  namespace: default
+spec:
+  hosts:
+  - "*"  
+  gateways:
+  - nginx-gateway-configuration
+  http:
+    - match:
+      - uri:
+          prefix: "/pathetic"
+      rewrite:
+        uri: "/"
+      route: 
+      - destination:
+          host: pathetic-nginx
+          subset: pathetic
+    - match:
+      - uri:
+          prefix: "/non-pathetic"
+      rewrite:
+        uri: "/"
+      route:
+      - destination:
+          host: pathetic-nginx
+          subset: non-pathetic
+    - match:
+      - uri:
+          prefix: "/"
+      route:
+      - destination:
+          host: pathetic-nginx
+          subset: pathetic
